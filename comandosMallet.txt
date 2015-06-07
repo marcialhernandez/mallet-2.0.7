@@ -15,3 +15,7 @@ bin/mallet train-classifier --input textos.mallet --output-classifier my.classif
 Crea el clasificador con el 90% de los datos de entrada, y se testea con el 10% restante
 
 bin/mallet train-classifier --input textos.mallet --output-classifier my.classifier --training-portion 0.9.
+
+Clasificar texto desde un archivo externo mediante un .classifier generado con anterioridad
+
+bin/mallet classify-file --input entradaAClasificar.txt --output clasificacion.txt --classifier my.classifier
