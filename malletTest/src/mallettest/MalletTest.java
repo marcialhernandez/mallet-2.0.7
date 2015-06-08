@@ -7,6 +7,7 @@ package mallettest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,8 +51,22 @@ public class MalletTest {
                     if (!datoEntradaActual.getName().equals(".DS_Store")){
                     System.out.println(datoEntradaActual.getName());
                         try {
-                            clasificador.printLabelings(datoEntradaActual);
-                            //Aqui se tiene que aplicar la funcion
+                            //clasificador.printLabelings(datoEntradaActual);
+                            clasificador.creaArchivoTemporal("singleInstance");
+                            System.out.println("Clasificando primera entrada... formato entrada Mallet");
+                            clasificador.printDatoSingle("1", "A romantic zen baseball comedy gets 4 BIG stars from me!");
+                            System.out.println("Clasificando segunda entrada... formato de entrada indice Invertido");
+                            clasificador.printDatoSingle("4", "Another Abysmal Digital Copy has random pixelations combined with muddy light and vague image resolution");
+                            Map<String, String> clasificacionSingle=clasificador.obtieneClasificacionSingle("4", "Another Abysmal Digital Copy has random pixelations combined with muddy light and vague image resolution");  
+                            System.out.println("Clasificando tercera entrada... imprimiendo desde map");
+                            
+                            for (Map.Entry<String,String> entry : clasificacionSingle.entrySet()) {                              
+                              String key = entry.getKey();
+                              String value = entry.getValue();
+                              System.out.println(key+":"+value);
+
+                            }
+
                         } catch (IOException ex) {
                             Logger.getLogger(MalletTest.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -61,29 +76,6 @@ public class MalletTest {
                 
             } //fin for (File child : directoryListing)
             
-            
-            /*parseJSONFile entradaBD;
-            JSONArray documentos;
-            FileWriter fichero = new FileWriter("entradaMallet.txt");
-            BufferedWriter pw = new BufferedWriter(fichero);
-            int contador=0;
-            
-            for (File child : directoryListing) {
-                
-                //Para cada documento
-                entradaBD = new parseJSONFile();
-                documentos = new JSONArray(); 
-                //Se usa esta forma para ignorar un documento dentro de la carpeta bd
-                if (child.getName().equals(".DS_Store")){
-                continue;}
-                documentos = entradaBD.obtieneDocumentos("/bd/"+child.getName());
-                contador=entradaBD.addDocuments(documentos,fichero,pw,contador);
-                System.out.println(contador+"");
-            }
-            fichero.close();
-                    
-        }
-    }*/
 }
         
         
