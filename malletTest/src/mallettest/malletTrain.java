@@ -18,6 +18,8 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,8 +27,32 @@ import java.util.Map;
  */
 public class malletTrain {
     
-    Classifier clasificador;
+    Classifier clasificador=null;
     private File tempFile;
+    static final String directorioClasificador="src/clasificador";
+    
+    
+    public boolean loadClassifier(){
+        boolean banderaClasificadorOk=false;
+        File dirClasificadores = new File(directorioClasificador);
+        File[] listadoDeClasificadores = dirClasificadores.listFiles();
+        if (listadoDeClasificadores != null) {
+                        for (File clasificadorActual : listadoDeClasificadores) {
+                
+                if (!clasificadorActual.getName().equals(".DS_Store")){
+                    System.out.println(clasificadorActual.getName());
+                    try {
+                        this.loadClassifier(clasificadorActual);
+                        banderaClasificadorOk=true;
+                    } catch (IOException | ClassNotFoundException ex) {
+                        Logger.getLogger(MalletTest.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+        }
+    }
+        
+    return banderaClasificadorOk;
+   }    
     
     public void loadClassifier(File serializedFile)
         throws FileNotFoundException, IOException, ClassNotFoundException {
